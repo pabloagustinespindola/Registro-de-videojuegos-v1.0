@@ -1,0 +1,123 @@
+# Ejercicio de práctica autoimpuesto
+
+# Crear un programa que le pida al usuario registrar videojuegos, su
+# año de salida y sus ventas (en millones). El menú interactivo debe
+# seguir el siguiente formato:
+#
+# ----MENÚ----
+# 1. Opcion 1
+# 2. Opcion 2
+# 
+# El usuario debe tener la posibilidad de agregar o eliminar un juego,
+# ordenar por popularidad (ventas) y ordenar por año de salida. 
+# También la opción de salir. Recuerde verificar toda posible 
+# informacion incorrecta
+
+inventario = []
+
+respuesta = 1
+while respuesta != 6:
+    print("\n----MENÚ----")
+    print("1. Agregar juego")
+    print("2. Eliminar juego")
+    print("3. Mostrar inventario")
+    print("4. Mostrar por popularidad (ventas)")
+    print("5. Mostrar por año de salida")
+    print("6. Salir\n")
+
+    respuesta = int(input("Ingrese una opcion: "))
+
+    if respuesta == 1: # AGREGAR JUEGO
+        opcion = "si"
+
+        while opcion == "si":
+            
+            juego = []
+
+            nombre = input("\nIngrese el nombre del juego: ")
+            ventas = float(input("Ingrese la cantidad de copias vendidas (en mill.): "))
+            anio = int(input("Ingrese el año de salida: "))
+
+            juego.append(nombre)
+            juego.append(ventas)
+            juego.append(anio)
+            inventario.append(juego)
+
+            print("\nEl juego ha sido agregado con éxito.\n")
+            opcion = input("¿Quiere ingresar otro juego?(si/no): ")
+
+    elif respuesta == 2: # ELIMINAR JUEGO
+        
+        juego_eliminado = input("\nIngrese el nombre del juego a eliminar: ")
+
+        eliminacion = 0
+        for elemento in inventario:
+            if juego_eliminado in elemento:
+                inventario.remove(elemento)
+                eliminacion = 1
+                break #Preguntar si esta bien usado el break
+        if eliminacion == 1:
+            print("Juego eliminado con éxito")
+        else:
+            print("El juego no se encuentra en el inventario")
+    elif respuesta == 3: # MOSTRAR INVENTARIO
+        
+        indice = 0
+        while indice < len(inventario):
+            print("\nNombre:", inventario[indice][0])
+            print("Copias vendidas:", inventario[indice][1], "millones")
+            print("Año de estreno:", inventario[indice][2])
+            indice += 1
+
+    elif respuesta == 4: # MOSTRAR POR COPIAS VENDIDAS
+        
+        lista = []
+
+        for elemento in inventario: # Copiar el inventario a 'lista'
+            lista.append(elemento)
+
+        lista_ord = []
+        
+        while len(lista) > 1:
+            mayor = lista[0]
+            for elemento in lista:
+                if elemento[1] > mayor[1]:
+                    mayor = elemento
+            print(mayor)
+            lista_ord.append(mayor)
+            lista.remove(mayor)
+        lista_ord.append(lista[0])
+
+        indice = 0
+        while indice < len(lista_ord): 
+            print("\nNombre:", lista_ord[indice][0])
+            print("Copias vendidas:", lista_ord[indice][1], "millones")
+            indice += 1
+        
+    elif respuesta == 5: # MOSTRAR POR AÑO DE SALIDA
+        print("Mostrar por año de salida")
+        lista = []
+
+        for elemento in inventario: # Copiar el inventario a 'lista'
+            lista.append(elemento)
+
+        lista_ord = []
+        
+        while len(lista) > 1:
+            menor = lista[0]
+            for elemento in lista:
+                if elemento[2] < menor[2]:
+                    menor = elemento
+
+            lista_ord.append(menor)
+            lista.remove(menor)
+        lista_ord.append(lista[0])
+
+        indice = 0
+        while indice < len(lista_ord): 
+            print("\nNombre:", lista_ord[indice][0])
+            print("Año de estreno:", lista_ord[indice][2])
+            indice += 1
+
+    elif respuesta == 6: # SALIR
+        print("Saliendo...")
